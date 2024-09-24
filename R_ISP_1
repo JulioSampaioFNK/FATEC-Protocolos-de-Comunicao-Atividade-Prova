@@ -1,0 +1,9 @@
+enable
+configure terminal
+hostname R_ISP_1
+int gig 0/1
+no shut
+ip addr 200.32.13.1 255.255.255.252
+ip route 10.32.0.0 255.255.0.0 gig 0/1
+end
+wr
