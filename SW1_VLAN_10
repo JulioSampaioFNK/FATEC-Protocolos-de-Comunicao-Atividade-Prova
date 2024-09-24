@@ -1,0 +1,30 @@
+enable
+configure terminal
+hostname SW1_VLAN_10
+vlan 10
+name TI
+vlan 20
+name ADM
+vlan 30
+name ENG
+vlan 40
+name RH
+vlan 99
+name GER
+spann portfast default
+spann portfast bpduguard default
+int vlan 99
+ip addr 10.32.99.201 255.255.255.0
+no shut
+ip default-gateway 10.32.99.1
+int range gig 0/1-2
+switchport mode trunk
+switchport trunk allowed vlan 10,20,30,40,99
+switchport trunk native vlan 99
+int range fast 0/1-10
+switchport mode access
+switchport access vlan 10
+span portfast
+span bpduguard enable
+end
+wr
