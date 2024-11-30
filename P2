@@ -1,0 +1,63 @@
+R_CORE
+enable 
+configure terminal
+hostname R_NOC
+enable secret cisco
+line vty 0 1
+password cisco
+login
+line console 0
+password cisco
+login
+interface fastethernet 0/0
+ip address 15.0.0.200 255.0.0.0
+no shutdown
+interface serial 0/0/0
+encapsulation ppp
+clock rate 128000
+ip address 20.0.0.20 255.0.0.0
+no shutdown
+exit
+snmp-server Community L1 ro
+snmp-server Community L2 rw
+ip route 20.0.0.0 255.0.0.0 20.0.0.2
+exit
+wr
+
+SW_CORE
+enable
+configure terminal
+hostname SW_CORE
+enable secret cisco
+ip default-gateway 15.0.0.200
+line vty 0 1
+password cisco
+line console 0
+password cisco
+login
+interface vlan 1
+ip address 15.0.0.150 255.0.0.0
+no shutdown
+exit
+snmp-server Community L1 ro
+snmp-server Community L2 rw
+do wr
+
+SW_DST
+enable
+configure terminal
+hostname SW_DST
+enable secret cisco
+ip default-gateway 16.0.0.200
+line vty 0 1
+password cisco
+line console 0
+password cisco
+login
+interface vlan 1
+ip address 16.0.0.150 255.0.0.0
+no shutdown
+exit
+snmp-server Community L1 ro
+snmp-server Community L2 rw
+do wr
